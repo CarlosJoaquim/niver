@@ -312,6 +312,70 @@
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
+        /* Área do Filme */
+        .movie-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .movie-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .movie-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .movie-header i {
+            font-size: 40px;
+            color: #ff6b6b;
+            margin-right: 15px;
+        }
+
+        .movie-header h2 {
+            font-size: 32px;
+            color: #ffd93d;
+        }
+
+        .movie-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .movie-player {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-player iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .movie-note {
+            margin-top: 20px;
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 16px;
+        }
+
         /* Nuvens de Mensagens */
         .clouds-grid {
             display: grid;
@@ -694,7 +758,7 @@
                 font-size: 28px;
             }
             
-            .tribute-card, .cloud-card, .gift-card {
+            .tribute-card, .cloud-card, .gift-card, .movie-container {
                 padding: 20px;
             }
             
@@ -706,6 +770,14 @@
             .close-modal {
                 top: 10px;
                 right: 15px;
+            }
+            
+            .movie-player iframe {
+                height: 250px;
+            }
+            
+            .movie-header h2 {
+                font-size: 24px;
             }
         }
     </style>
@@ -737,7 +809,7 @@
             <i class="fas fa-pause"></i>
             <span>Pausar</span>
         </button>
-        <audio id="background-music" start>
+        <audio id="background-music" loop autoplay>
             <source src="Ben E. King - Stand By Me (HQ Video Remastered In 1080p).mp3" type="audio/mpeg">
         </audio>
     </div>
@@ -746,7 +818,7 @@
     <main id="main-content">
         <!-- Hero Section -->
         <section class="hero">
-            <div class="magic-date">26 • Setembro • 2024</div>
+            <div class="magic-date">26 • Setembro • 2025</div>
             <h1 class="magic-title">
                 <span class="title-word">Feliz</span>
                 <span class="title-word">20</span>
@@ -773,6 +845,26 @@
                         <i class="fas fa-sparkles"></i>
                     </button>
                 </div>
+            </div>
+        </section>
+
+        <!-- Área do Filme Especial -->
+        <section class="movie-section">
+            <div class="movie-container">
+                <div class="movie-header">
+                    <i class="fas fa-film"></i>
+                    <h2>Momento Especial</h2>
+                </div>
+                <p class="movie-description">Dedica alguns minutos para apreciar este momento especial preparado com todo o carinho para ti. Relaxa e aproveita!</p>
+                <div class="movie-player">
+                    <!-- Substitua o URL pelo seu vídeo preferido -->
+                    <iframe src="https://www.youtube.com/watch?v=mUVUmG9vOFw&list=RDmUVUmG9vOFw&start_radio=1" 
+                            title="Vídeo Especial para a Lúcia" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="movie-note">Aproveita cada momento deste dia especial!</p>
             </div>
         </section>
 
@@ -1069,7 +1161,7 @@
                     this.toggleMusic(music);
                 });
 
-                // Modal da tributo - CORREÇÃO DOS BOTÕES
+                // Modal da tributo
                 const readMoreBtn = document.getElementById('read-more');
                 const tributeModal = document.getElementById('tribute-modal');
                 const closeTribute = document.querySelector('#tribute-modal .close-modal');
@@ -1093,7 +1185,7 @@
                 prevBtn.addEventListener('click', () => this.navigateGallery(-1));
                 nextBtn.addEventListener('click', () => this.navigateGallery(1));
 
-                // Fechar modais clicando fora - CORREÇÃO
+                // Fechar modais clicando fora
                 window.addEventListener('click', (e) => {
                     if (e.target === document.getElementById('tribute-modal')) {
                         this.closeModal(document.getElementById('tribute-modal'));
@@ -1393,7 +1485,7 @@
                 document.body.style.overflow = 'auto';
             }
 
-            // Gerenciar modais - CORREÇÃO COMPLETA
+            // Gerenciar modais
             openModal(modal) {
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
