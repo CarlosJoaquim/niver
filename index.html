@@ -488,6 +488,8 @@
             position: relative;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .close-modal {
@@ -498,10 +500,19 @@
             cursor: pointer;
             color: #ff6b6b;
             transition: color 0.3s ease;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close-modal:hover {
             color: #ffd93d;
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .modal-body h2 {
@@ -551,6 +562,17 @@
             color: white;
             cursor: pointer;
             z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-lightbox:hover {
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .lightbox-nav {
@@ -680,6 +702,11 @@
                 width: 95%;
                 padding: 20px;
             }
+            
+            .close-modal {
+                top: 10px;
+                right: 15px;
+            }
         }
     </style>
 </head>
@@ -707,10 +734,10 @@
     <!-- Player de Música -->
     <div class="music-player">
         <button id="music-toggle" class="music-btn">
-            <i class="fas fa-music"></i>
-            <span>Música</span>
+            <i class="fas fa-pause"></i>
+            <span>Pausar</span>
         </button>
-        <audio id="background-music" loop>
+        <audio id="background-music" start>
             <source src="Ben E. King - Stand By Me (HQ Video Remastered In 1080p).mp3" type="audio/mpeg">
         </audio>
     </div>
@@ -790,9 +817,9 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <div class="modal-body">
-                <h2>Para a  Lúcia Querida</h2>
+                <h2>Para a Minha Lúcia Querida</h2>
                 <div class="tribute-text">
-                    <p>Perturbada,</p>
+                    <p>Meu amor,</p>
                     <p>Escrevo estas palavras com o coração transbordando de amor por ti. A Lúcia que eu conheço é uma combinação rara de força e delicadeza, de inteligência e compaixão, de determinação e sensibilidade.</p>
                     <p>Lembro-me de cada momento ao teu lado como se fosse ontem. Do teu sorriso que ilumina até o dia mais cinzento, da tua voz suave que acalma a minha alma, da tua maneira única de ver o mundo que me faz perceber a beleza nas pequenas coisas.</p>
                     <p>Tu és a pessoa mais gentil que eu conheço. A tua capacidade de te importares com os outros, de dares sem esperar nada em returno, de espalhares amor por onde passas - isso é verdadeiramente mágico.</p>
@@ -837,7 +864,7 @@
             constructor() {
                 this.images = [];
                 this.currentImageIndex = 0;
-                this.isMusicPlaying = false;
+                this.isMusicPlaying = true; // Música começa tocando
                 this.processingComplete = false;
                 this.init();
             }
@@ -845,6 +872,9 @@
             async init() {
                 // Inicializar universo cósmico
                 this.createUniverse();
+                
+                // Iniciar música automaticamente
+                this.startMusic();
                 
                 // Iniciar processamento dos 20 anos
                 this.startAgeProcessing();
@@ -857,6 +887,30 @@
                 
                 // Criar conteúdo
                 this.createContent();
+            }
+
+            // Iniciar música automaticamente
+            startMusic() {
+                const music = document.getElementById('background-music');
+                const btn = document.getElementById('music-toggle');
+                
+                // Tentar reproduzir a música
+                const playMusic = () => {
+                    music.volume = 0.7; // Volume moderado
+                    music.play().then(() => {
+                        this.isMusicPlaying = true;
+                        btn.innerHTML = '<i class="fas fa-pause"></i><span>Pausar</span>';
+                        console.log('Música iniciada automaticamente');
+                    }).catch(e => {
+                        console.log('Autoplay prevenido pelo navegador:', e);
+                        // Se o autoplay for bloqueado, mudar o botão para "Reproduzir"
+                        this.isMusicPlaying = false;
+                        btn.innerHTML = '<i class="fas fa-music"></i><span>Música</span>';
+                    });
+                };
+                
+                // Tentar reproduzir após um pequeno delay para melhor compatibilidade
+                setTimeout(playMusic, 1000);
             }
 
             // Criar universo cósmico
@@ -977,13 +1031,19 @@
                 }, interval);
             }
 
-            // Carregar dados do JSON
+            // Carregar imagens da pasta img/
             async loadData() {
                 try {
-                    // Simulação de carregamento - substitua pela sua URL real
-                    const response = await fetch('imagens.json');
-                    const data = await response.json();
-                    this.images = data.images;
+                    // Carregar as 13 imagens da pasta img/
+                    this.images = [];
+                    for (let i = 1; i <= 13; i++) {
+                        this.images.push({
+                            url: `img/${i}.png`,
+                            alt: `Momento especial ${i}`,
+                            caption: `Memória preciosa #${i}`
+                        });
+                    }
+                    console.log('Imagens carregadas:', this.images.length);
                 } catch (error) {
                     console.error('Erro ao carregar imagens:', error);
                     // Fallback para imagens de exemplo
@@ -992,7 +1052,7 @@
             }
 
             getFallbackImages() {
-                return Array.from({ length: 30 }, (_, i) => ({
+                return Array.from({ length: 13 }, (_, i) => ({
                     url: `https://picsum.photos/400/400?random=${i + 1}`,
                     alt: `Momento especial ${i + 1}`,
                     caption: `Memória preciosa #${i + 1}`
@@ -1009,17 +1069,23 @@
                     this.toggleMusic(music);
                 });
 
-                // Modal da tributo
+                // Modal da tributo - CORREÇÃO DOS BOTÕES
                 const readMoreBtn = document.getElementById('read-more');
                 const tributeModal = document.getElementById('tribute-modal');
-                const closeTribute = tributeModal.querySelector('.close-modal');
+                const closeTribute = document.querySelector('#tribute-modal .close-modal');
 
                 readMoreBtn.addEventListener('click', () => this.openModal(tributeModal));
                 closeTribute.addEventListener('click', () => this.closeModal(tributeModal));
 
+                // Modal das mensagens
+                const messageModal = document.getElementById('message-modal');
+                const closeMessage = document.querySelector('#message-modal .close-modal');
+                
+                closeMessage.addEventListener('click', () => this.closeModal(messageModal));
+
                 // Lightbox da galeria
                 const lightbox = document.getElementById('gallery-lightbox');
-                const closeLightbox = lightbox.querySelector('.close-lightbox');
+                const closeLightbox = document.querySelector('#gallery-lightbox .close-lightbox');
                 const prevBtn = lightbox.querySelector('.prev-btn');
                 const nextBtn = lightbox.querySelector('.next-btn');
 
@@ -1027,18 +1093,36 @@
                 prevBtn.addEventListener('click', () => this.navigateGallery(-1));
                 nextBtn.addEventListener('click', () => this.navigateGallery(1));
 
-                // Fechar modais clicando fora
+                // Fechar modais clicando fora - CORREÇÃO
                 window.addEventListener('click', (e) => {
-                    if (e.target === tributeModal) this.closeModal(tributeModal);
-                    if (e.target === lightbox) this.closeLightbox();
+                    if (e.target === document.getElementById('tribute-modal')) {
+                        this.closeModal(document.getElementById('tribute-modal'));
+                    }
+                    if (e.target === document.getElementById('message-modal')) {
+                        this.closeModal(document.getElementById('message-modal'));
+                    }
+                    if (e.target === lightbox) {
+                        this.closeLightbox();
+                    }
                 });
 
-                // Teclado para navegação da galeria
+                // Teclado para navegação da galeria e fechar modais
                 document.addEventListener('keydown', (e) => {
+                    // Lightbox
                     if (lightbox.style.display === 'block') {
                         if (e.key === 'ArrowLeft') this.navigateGallery(-1);
                         if (e.key === 'ArrowRight') this.navigateGallery(1);
                         if (e.key === 'Escape') this.closeLightbox();
+                    }
+                    
+                    // Fechar modais com ESC
+                    if (e.key === 'Escape') {
+                        if (document.getElementById('tribute-modal').style.display === 'block') {
+                            this.closeModal(document.getElementById('tribute-modal'));
+                        }
+                        if (document.getElementById('message-modal').style.display === 'block') {
+                            this.closeModal(document.getElementById('message-modal'));
+                        }
                     }
                 });
             }
@@ -1055,7 +1139,7 @@
             createMessageCards() {
                 const messages = [
                     {
-                        title: "💖 Para a  Lúcia",
+                        title: "💖 Para a Minha Lúcia",
                         preview: "Cada momento contigo é um tesouro que guardo no coração...",
                         fullMessage: "Lúcia, querida...\n\nDesde o momento em que te conheci, soube que eras alguém especial. A tua gentileza, o teu sorriso contagiante, a tua maneira única de ver o mundo - tudo em ti é mágico.\n\nNestes 20 anos, cresceste numa pessoa extraordinária. A tua força de carácter, a tua compaixão pelos outros, a tua inteligência brilhante... tudo isso me enche de orgulho e admiração.\n\nQue este aniversário seja tão maravilhoso quanto és tu!"
                     },
@@ -1180,12 +1264,12 @@
                 if (this.isMusicPlaying) {
                     music.pause();
                     btn.innerHTML = '<i class="fas fa-music"></i><span>Música</span>';
+                    this.isMusicPlaying = false;
                 } else {
-                    music.play().catch(e => console.log('Autoplay prevented:', e));
+                    music.play().catch(e => console.log('Erro ao reproduzir música:', e));
                     btn.innerHTML = '<i class="fas fa-pause"></i><span>Pausar</span>';
+                    this.isMusicPlaying = true;
                 }
-                
-                this.isMusicPlaying = !this.isMusicPlaying;
             }
 
             // Mostrar modal de mensagem
@@ -1309,7 +1393,7 @@
                 document.body.style.overflow = 'auto';
             }
 
-            // Gerenciar modais
+            // Gerenciar modais - CORREÇÃO COMPLETA
             openModal(modal) {
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
