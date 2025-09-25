@@ -1,1162 +1,1400 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz 20 Anos, Lúcia!</title>
-    
-    <!-- Bibliotecas externas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <title>Feliz 20 Anos, Lúcia Mendes! 💫</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
+        /* Reset e configurações básicas */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #e83e8c;
-            --secondary: #6f42c1;
-            --accent: #20c997;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --gold: #ffd700;
-            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            
-            /* Cores para modo dia */
-            --day-bg: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
-            --day-text: #f8f9fa;
-            
-            /* Cores para modo noite */
-            --night-bg: linear-gradient(to bottom, #0a122a, #1a1a40, #3a0ca3);
-            --night-text: #f8f9fa;
-        }
-
-        /* Preferência de redução de movimento */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
         body {
-            color: var(--light);
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
-            background: var(--day-bg);
-            transition: background 1.2s ease;
         }
 
-        body.night-mode {
-            background: var(--night-bg);
-        }
-
-        /* Preloader */
-        #preloader {
+        /* Tela de Processamento dos 20 Anos */
+        #processing-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: radial-gradient(circle at center, #0f0c29 0%, #000 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.8s ease-out;
+            transition: opacity 1.5s ease;
         }
 
-        .counter {
-            font-size: 6rem;
-            font-weight: bold;
-            color: var(--primary);
-            text-shadow: 0 0 20px rgba(232, 62, 140, 0.7);
-            margin-bottom: 2rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--light);
+        .processing-content {
             text-align: center;
+            max-width: 800px;
+            padding: 20px;
         }
 
-        .loading-bar {
-            width: 300px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
+        .age-counter {
+            font-size: 120px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            color: transparent;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .processing-text {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            width: 80%;
+            max-width: 500px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            margin: 0 auto 30px;
             overflow: hidden;
         }
 
-        .loading-progress {
+        .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
             border-radius: 10px;
-            transition: width 0.5s ease;
+            transition: width 0.3s ease;
         }
 
-        .quote {
-            margin-top: 2rem;
-            font-style: italic;
-            text-align: center;
-            max-width: 600px;
-            padding: 0 20px;
-            color: var(--gold);
-            font-size: 1.1rem;
+        .years-text {
+            font-size: 18px;
+            opacity: 0.8;
         }
 
-        /* Céu e elementos celestes */
-        .sky {
+        /* Universo Cósmico */
+        #universe {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -1;
             overflow: hidden;
-            transition: opacity 1.2s ease;
         }
 
-        /* Sol */
-        .sun {
+        #stars-container {
             position: absolute;
-            top: 20%;
-            right: 15%;
-            width: 120px;
-            height: 120px;
-            background: var(--gold);
-            border-radius: 50%;
-            box-shadow: 0 0 60px var(--gold), 0 0 100px rgba(255, 215, 0, 0.5);
-            z-index: 1;
-            opacity: 1;
-            transition: opacity 1.2s ease, transform 1.2s ease;
+            width: 100%;
+            height: 100%;
         }
 
-        body.night-mode .sun {
-            opacity: 0;
-            transform: translateY(100px);
-        }
-
-        /* Lua */
-        .moon {
-            position: absolute;
-            top: 10%;
-            right: 20%;
-            width: 80px;
-            height: 80px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-            opacity: 0;
-            z-index: 1;
-            transition: opacity 1.2s ease, transform 1.2s ease;
-        }
-
-        body.night-mode .moon {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Nuvens */
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            opacity: 0.8;
-            transition: opacity 1.2s ease;
-        }
-
-        .cloud-1 {
-            width: 100px;
-            height: 50px;
-            top: 25%;
-            left: 20%;
-            box-shadow: 20px 0 0 0 rgba(255, 255, 255, 0.8), 40px 0 0 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .cloud-2 {
-            width: 80px;
-            height: 40px;
-            top: 30%;
-            right: 25%;
-            box-shadow: 16px 0 0 0 rgba(255, 255, 255, 0.8), 32px 0 0 0 rgba(255, 255, 255, 0.8);
-        }
-
-        body.night-mode .cloud {
-            opacity: 0;
-        }
-
-        /* Estrelas */
         .star {
             position: absolute;
             background-color: white;
             border-radius: 50%;
-            opacity: 0;
-            animation: twinkle 4s infinite;
-            transition: opacity 1.2s ease, transform 1.2s ease;
-        }
-
-        body.night-mode .star {
-            opacity: 0.8;
+            animation: twinkle 5s infinite;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 0.2; }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
 
-        /* Conteúdo principal */
-        #main-content {
+        #shooting-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, white);
+            transform: rotate(-45deg);
+            animation: shooting 10s infinite;
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translateX(-100px) translateY(-100px) rotate(-45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.3;
+            animation: nebulaFloat 30s infinite alternate;
+        }
+
+        .nebula-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff6b6b, transparent);
+            top: 10%;
+            left: 10%;
+        }
+
+        .nebula-2 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #4d96ff, transparent);
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 15s;
+        }
+
+        @keyframes nebulaFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Conteúdo Principal (inicialmente oculto) */
+        main {
             opacity: 0;
-            transition: opacity 1.2s ease;
+            transition: opacity 1.5s ease;
         }
 
-        .container {
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .magic-date {
+            font-size: 24px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .magic-title {
+            font-size: 60px;
+            margin-bottom: 30px;
+        }
+
+        .title-word {
+            display: inline-block;
+            margin: 0 10px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .highlight-name {
+            color: #ffd93d;
+            text-shadow: 0 0 20px rgba(255, 217, 61, 0.7);
+        }
+
+        .hearts-fall {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            opacity: 0;
+            animation: heartFall 10s linear infinite;
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Seções de conteúdo */
+        section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+
+        .tribute-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tribute-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tribute-header i {
+            font-size: 30px;
+            color: #ff6b6b;
+            margin-right: 15px;
+        }
+
+        .tribute-header h2 {
+            font-size: 28px;
+        }
+
+        .tribute-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .magic-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .magic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Nuvens de Mensagens */
+        .clouds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        /* Cabeçalho */
-        header {
-            text-align: center;
-            padding: 100px 20px 60px;
+        .cloud-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cloud-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .cloud-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd93d;
+        }
+
+        .cloud-card p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .click-hint {
+            font-size: 14px;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Galeria */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
             position: relative;
-            min-height: 100vh;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-overlay i {
+            font-size: 30px;
+            color: white;
+        }
+
+        /* Presentes */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gift-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .gift-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .gift-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd93d;
+        }
+
+        /* Footer */
+        .magic-footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+
+        .love-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+        }
+
+        .love-message i {
+            color: #ff6b6b;
+        }
+
+        /* Modais */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #ff6b6b;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #ffd93d;
+        }
+
+        .modal-body h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffd93d;
+        }
+
+        .tribute-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+            color: #ffd93d;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 5rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--light);
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        .age-badge {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.8rem;
-            margin-top: 30px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-            animation: pulse 2s infinite;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        @keyframes pulse {
-            0% { transform: translateY(50px) scale(1); }
-            50% { transform: translateY(50px) scale(1.05); }
-            100% { transform: translateY(50px) scale(1); }
-        }
-
-        /* Seção de Introdução */
-        .intro {
-            padding: 100px 20px;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.4);
-            margin: 40px 0;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .intro::before {
-            content: '';
+        .close-lightbox {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80') center/cover;
-            opacity: 0.2;
-            z-index: -1;
-        }
-
-        .intro-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .intro-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        /* Timeline de Fotos */
-        .timeline-section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .timeline-section h2 {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background-color: var(--gold);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-            border-radius: 10px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: var(--transition);
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background-color: var(--primary);
-            border: 4px solid var(--gold);
-            top: 50%;
-            border-radius: 50%;
-            z-index: 1;
-            transform: translateY(-50%);
-        }
-
-        .timeline-item:nth-child(odd)::after {
-            right: -13px;
-        }
-
-        .timeline-item:nth-child(even)::after {
-            left: -13px;
-        }
-
-        .timeline-content {
-            padding: 25px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .timeline-img-container {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .timeline-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        .timeline-img.loaded {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .timeline-year {
-            color: var(--gold);
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .timeline-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        /* Galeria 3D */
-        .gallery-3d {
-            padding: 100px 0;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            margin: 60px 0;
-            position: relative;
-        }
-
-        .gallery-3d::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80') center/cover;
-            opacity: 0.15;
-            z-index: -1;
-        }
-
-        .gallery-3d h2 {
-            margin-bottom: 60px;
-        }
-
-        .gallery-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            perspective: 1000px;
-        }
-
-        .gallery-item {
-            width: 250px;
-            height: 300px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s;
-            cursor: pointer;
-        }
-
-        .gallery-item.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .gallery-front, .gallery-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .gallery-front {
-            background-color: var(--primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .gallery-back {
-            background-color: var(--secondary);
-            transform: rotateY(180deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .gallery-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Mensagens */
-        .messages {
-            max-width: 900px;
-            margin: 100px auto;
-            padding: 50px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            border: 1px solid var(--gold);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .messages::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .message {
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: var(--transition);
-        }
-
-        .message.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .message:last-child {
-            margin-bottom: 0;
-        }
-
-        .message p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        .message-author {
-            font-weight: bold;
-            color: var(--gold);
-            font-size: 1.1rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 50px 30px;
-            margin-top: 100px;
-            background: rgba(0, 0, 0, 0.7);
-            border-top: 1px solid var(--gold);
-            position: relative;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .heart {
-            color: var(--primary);
-            animation: heartbeat 1.5s infinite;
-            display: inline-block;
-        }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            5% { transform: scale(1.1); }
-            10% { transform: scale(1); }
-            15% { transform: scale(1.1); }
-            20% { transform: scale(1); }
-            100% { transform: scale(1); }
-        }
-
-        /* Botão de Voltar ao Topo */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
+            top: 20px;
             right: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--primary);
+            font-size: 40px;
             color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
             cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .lightbox-image-container {
+            max-width: 90%;
+            max-height: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .lightbox-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            max-width: 90%;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail.active, .thumbnail:hover {
+            opacity: 1;
+            border: 2px solid #ffd93d;
+        }
+
+        /* Player de Música */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             z-index: 100;
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+        .music-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
         }
 
-        .back-to-top:hover {
-            background: var(--secondary);
-            transform: translateY(-5px);
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animações */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Responsividade */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 4rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-            
-            .timeline-item::after {
-                left: 18px;
-            }
-            
-            .timeline-item:nth-child(odd)::after {
-                right: auto;
-            }
-            
-            .gallery-item {
-                width: 200px;
-                height: 250px;
-            }
-        }
-
         @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
+            .age-counter {
+                font-size: 80px;
             }
             
-            h2 {
-                font-size: 1.8rem;
+            .magic-title {
+                font-size: 40px;
             }
             
-            .counter {
-                font-size: 4rem;
+            .section-title {
+                font-size: 28px;
             }
             
-            .sun, .moon {
-                width: 80px;
-                height: 80px;
-                right: 10%;
+            .tribute-card, .cloud-card, .gift-card {
+                padding: 20px;
             }
             
-            .cloud {
-                display: none;
-            }
-            
-            .message p {
-                font-size: 1.1rem;
-            }
-            
-            .gallery-item {
-                width: 150px;
-                height: 200px;
-            }
-            
-            .intro-text {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Animações de confete otimizadas */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            opacity: 0.7;
-            animation: fall linear forwards;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
+            .modal-content {
+                width: 95%;
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Preloader com contagem -->
-    <div id="preloader">
-        <div class="counter">0</div>
-        <div class="loading-text">Carregando memórias especiais...</div>
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
+    <!-- Tela de Processamento dos 20 Anos -->
+    <div id="processing-screen">
+        <div class="processing-content">
+            <div class="age-counter" id="age-counter">0</div>
+            <div class="processing-text">Processando 20 anos de memórias incríveis...</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="years-text" id="years-text">Carregando as melhores lembranças...</div>
         </div>
-        <div class="quote">"A vida não é medida pelo número de vezes que respiramos, mas pelos momentos que nos tiram o fôlego." - Crepúsculo</div>
     </div>
 
-    <!-- Elementos do céu -->
-    <div class="sky">
-        <div class="sun"></div>
-        <div class="moon"></div>
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        
-        <!-- Estrelas -->
-        <div class="star" style="top: 15%; left: 10%; width: 3px; height: 3px; animation-delay: 0s;"></div>
-        <div class="star" style="top: 25%; left: 80%; width: 2px; height: 2px; animation-delay: 1s;"></div>
-        <div class="star" style="top: 40%; left: 25%; width: 4px; height: 4px; animation-delay: 2s;"></div>
-        <div class="star" style="top: 60%; left: 65%; width: 2px; height: 2px; animation-delay: 3s;"></div>
-        <div class="star" style="top: 75%; left: 45%; width: 3px; height: 3px; animation-delay: 0.5s;"></div>
-        <div class="star" style="top: 50%; left: 15%; width: 2px; height: 2px; animation-delay: 1.5s;"></div>
-        <div class="star" style="top: 30%; left: 55%; width: 3px; height: 3px; animation-delay: 2.5s;"></div>
-        <div class="star" style="top: 65%; left: 85%; width: 2px; height: 2px; animation-delay: 0.8s;"></div>
-        <div class="star" style="top: 20%; left: 35%; width: 3px; height: 3px; animation-delay: 1.8s;"></div>
-        <div class="star" style="top: 45%; left: 75%; width: 2px; height: 2px; animation-delay: 2.8s;"></div>
+    <!-- Universo Cósmico -->
+    <div id="universe">
+        <div id="stars-container"></div>
+        <div id="shooting-stars"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
     </div>
 
-    <!-- Conteúdo principal -->
-    <div id="main-content">
-        <!-- Cabeçalho -->
-        <header>
-            <h1>Feliz Aniversário, Lúcia!</h1>
-            <h2>Celebrando 20 anos de uma jornada incrível</h2>
-            <div class="age-badge">20 anos</div>
-        </header>
+    <!-- Player de Música -->
+    <div class="music-player">
+        <button id="music-toggle" class="music-btn">
+            <i class="fas fa-music"></i>
+            <span>Música</span>
+        </button>
+        <audio id="background-music" loop>
+            <source src="Ben E. King - Stand By Me (HQ Video Remastered In 1080p).mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
-        <div class="container">
-            <!-- Seção de Introdução -->
-            <section class="intro">
-                <div class="intro-content">
-                    <h2>Uma Jornada de 20 Anos</h2>
-                    <p class="intro-text">
-                        Lúcia, hoje celebramos não apenas seu aniversário, mas cada momento especial que moldou a pessoa incrível que você se tornou. Sua jornada até aqui foi repleta de descobertas, aprendizados e conquistas. Sua doçura, gentileza e atenção aos outros são qualidades que inspiram todos ao seu redor.
-                    </p>
-                    <p class="intro-text">
-                        Como diz uma famosa frase de Crepúsculo: <em>"Mesmo a pessoa mais forte precisa de alguém em quem confiar"</em>. E você, Lúcia, é essa pessoa confiável para tantos - uma amiga leal, uma filha amorosa e uma pessoa cujo coração transborda bondade.
-                    </p>
-                </div>
-            </section>
+    <!-- Conteúdo Principal (inicialmente oculto) -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="magic-date">26 • Setembro • 2024</div>
+            <h1 class="magic-title">
+                <span class="title-word">Feliz</span>
+                <span class="title-word">20</span>
+                <span class="title-word">Anos</span>
+                <span class="title-word highlight-name">Lúcia</span>
+                <span class="title-word">Mendes</span>
+            </h1>
+            <div class="hearts-fall" id="hearts-container"></div>
+        </section>
 
-            <!-- Timeline de Fotos -->
-            <section class="timeline-section">
-                <h2>Linha do Tempo da Lúcia</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-img-container">
-                                <img src="img/1.jpg" alt="Lúcia com 1 ano" class="timeline-img">
-                            </div>
-                            <div class="timeline-year">1 ano</div>
-                            <div class="timeline-text">O início de uma jornada incrível. Lúcia chegou ao mundo trazendo alegria e luz para todos ao seu redor. Seus primeiros passos, suas primeiras palavras - cada momento era uma celebração.</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-img-container">
-                                <img src="img/2.jpg" alt="Lúcia com 2 anos" class="timeline-img">
-                            </div>
-                            <div class="timeline-year">2 anos</div>
-                            <div class="timeline-text">Descobrindo o mundo com olhos curiosos. Cada dia uma nova descoberta, cada momento uma nova aventura. Sua personalidade única já começava a brilhar, mostrando traços da pessoa especial que se tornaria.</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-img-container">
-                                <img src="img/3.jpg" alt="Lúcia com 3 anos" class="timeline-img">
-                            </div>
-                            <div class="timeline-year">3 anos</div>
-                            <div class="timeline-text">A personalidade começando a florescer. Já mostrava sua doçura e gentileza que marcariam seu carácter. Sua capacidade de espalhar alegria era evidente para todos que tinham a sorte de conhecê-la.</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-img-container">
-                                <img src="img/4.jpg" alt="Lúcia com 4 anos" class="timeline-img">
-                            </div>
-                            <div class="timeline-year">4 anos</div>
-                            <div class="timeline-text">Cheia de energia e imaginação. Sua criatividade já começava a brilhar nessa fase. Histórias inventadas, desenhos coloridos e uma curiosidade infinita sobre o mundo ao seu redor.</div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="timeline-img-container">
-                                <img src="img/5.jpg" alt="Lúcia com 5 anos" class="timeline-img">
-                            </div>
-                            <div class="timeline-year">5 anos</div>
-                            <div class="timeline-text">O mundo é um parque de diversões. A curiosidade e a alegria contagiavam todos à sua volta. Seu sorriso iluminava os ambientes e sua bondade inata já era evidente mesmo nesta tenra idade.</div>
-                        </div>
-                    </div>
+        <!-- Área de Tributo Especial -->
+        <section class="tribute-section">
+            <div class="tribute-card">
+                <div class="tribute-header">
+                    <i class="fas fa-heart"></i>
+                    <h2>Para a Lúcia</h2>
                 </div>
-            </section>
+                <div class="tribute-content">
+                    <p>Lúcia, cada dia ao teu lado é uma bênção. A tua gentileza ilumina os meus dias, o teu sorriso é o meu sol, e o teu coração é o meu porto seguro.</p>
+                    <p>Nestes 20 anos de vida, tornaste-te numa pessoa extraordinária - forte, compassiva, inteligente e com uma luz interior que cativa todos à tua volta.</p>
+                    <p>Este é mais do que um aniversário; é a celebração da pessoa incrível que és e da alegria que trazes ao mundo.</p>
+                    <button id="read-more" class="magic-btn">
+                        <span>Ler Mais</span>
+                        <i class="fas fa-sparkles"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-            <!-- Galeria 3D -->
-            <section class="gallery-3d">
-                <h2>Memórias em 3D</h2>
-                <div class="gallery-container">
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>6 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/6.jpg" alt="Lúcia aos 6 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>7 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/7.jpg" alt="Lúcia aos 7 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>8 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/8.jpg" alt="Lúcia aos 8 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>9 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/9.jpg" alt="Lúcia aos 9 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>10 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/10.jpg" alt="Lúcia aos 10 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>11 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/11.jpg" alt="Lúcia aos 11 anos" class="gallery-img">
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item">
-                        <div class="gallery-front">
-                            <div>12 anos</div>
-                        </div>
-                        <div class="gallery-back">
-                            <img src="img/12.jpg" alt="Lúcia aos 12 anos" class="gallery-img">
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- Nuvens de Mensagens -->
+        <section class="clouds-section">
+            <h2 class="section-title">Mensagens do Coração</h2>
+            <div class="clouds-grid" id="clouds-container">
+                <!-- As mensagens serão inseridas via JavaScript -->
+            </div>
+        </section>
 
-            <!-- Mensagens -->
-            <div class="messages">
-                <div class="message">
-                    <p>"E assim a menina que tinha tudo para ser uma donzela em perigo decidiu se tornar uma heroína."</p>
-                    <div class="message-author">- Crepúsculo</div>
+        <!-- Galeria Mágica -->
+        <section class="gallery-section">
+            <h2 class="section-title">Nossa Galeria de Momentos</h2>
+            <div class="gallery-grid" id="gallery-container">
+                <!-- As imagens serão inseridas via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Presentes Especiais -->
+        <section class="gifts-section">
+            <h2 class="section-title">Presentes de Amor</h2>
+            <div class="gifts-grid" id="gifts-container">
+                <!-- Os presentes serão inseridos via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Footer Mágico -->
+        <footer class="magic-footer">
+            <div class="footer-content">
+                <div class="love-message">
+                    <i class="fas fa-heart"></i>
+                    <p>Com todo o amor do mundo, para a Lúcia no seu 20º aniversário</p>
+                    <i class="fas fa-heart"></i>
                 </div>
-                
-                <div class="message">
-                    <p>"A melhor kindred (espécie) que alguém poderia ter. Que sua luz continue a guiar todos ao seu redor."</p>
-                    <div class="message-author">- Diários de um Vampiro</div>
-                </div>
-                
-                <div class="message">
-                    <p>"Lúcia, sua doçura é como a luz do sol para aqueles que têm sorte de te conhecer. Que seu dia seja tão radiante quanto você é!"</p>
-                    <div class="message-author">- Que seu novo ano de vida seja repleto de bênçãos!</div>
-                </div>
-                
-                <div class="message">
-                    <p>"Como dizia Stefan Salvatore: 'Não importa o quão escuro esteja o mundo, o amor sempre encontrará uma maneira de brilhar'. Seu amor pela vida e pelas pessoas é inspirador."</p>
-                    <div class="message-author">- Inspirado em Diários de um Vampiro</div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Modal da Tributo Completa -->
+    <div id="tribute-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <h2>Para a  Lúcia Querida</h2>
+                <div class="tribute-text">
+                    <p>Perturbada,</p>
+                    <p>Escrevo estas palavras com o coração transbordando de amor por ti. A Lúcia que eu conheço é uma combinação rara de força e delicadeza, de inteligência e compaixão, de determinação e sensibilidade.</p>
+                    <p>Lembro-me de cada momento ao teu lado como se fosse ontem. Do teu sorriso que ilumina até o dia mais cinzento, da tua voz suave que acalma a minha alma, da tua maneira única de ver o mundo que me faz perceber a beleza nas pequenas coisas.</p>
+                    <p>Tu és a pessoa mais gentil que eu conheço. A tua capacidade de te importares com os outros, de dares sem esperar nada em returno, de espalhares amor por onde passas - isso é verdadeiramente mágico.</p>
+                    <p>Nos teus 20 anos, já realizaste tanto e tocaste tantas vidas. Imagino o que ainda vais conquistar, e sinto-me privilegiado por poder testemunhar a tua jornada.</p>
+                    <p>Que este aniversário seja o reflexo da pessoa maravilhosa que és - cheio de luz, amor e magia. Que continues a brilhar, a crescer e a inspirar todos à tua volta.</p>
+                    <p>Eu amo-te mais do que as palavras podem expressar.</p>
+                    <p class="signature">Para sempre teu</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <p>Feito com <span class="heart"><i class="fas fa-heart"></i></span> para Lúcia no seu 20º aniversário</p>
-            <p>26 de Setembro de 2023</p>
-        </footer>
-
-        <!-- Botão de Voltar ao Topo -->
-        <div class="back-to-top">
-            <i class="fas fa-arrow-up"></i>
+    <!-- Modal das Mensagens -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-message"></div>
         </div>
     </div>
 
+    <!-- Lightbox da Galeria -->
+    <div id="gallery-lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="close-lightbox">&times;</span>
+            <div class="lightbox-nav">
+                <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="lightbox-image-container">
+                <img id="lightbox-image" src="" alt="">
+                <div class="image-caption" id="image-caption"></div>
+            </div>
+            <div class="lightbox-thumbnails" id="lightbox-thumbnails"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Preloader e contagem
-            const preloader = document.getElementById('preloader');
-            const counter = document.querySelector('.counter');
-            const progress = document.querySelector('.loading-progress');
-            const mainContent = document.getElementById('main-content');
-            const quotes = [
-                '"A vida não é medida pelo número de vezes que respiramos, mas pelos momentos que nos tiram o fôlego." - Crepúsculo',
-                '"Mesmo a pessoa mais forte precisa de alguém em quem confiar." - Diários de um Vampiro',
-                '"O amor é a melhor parte de qualquer história." - Crepúsculo',
-                '"Às vezes, os laços mais fortes são os que escolhemos fazer." - Diários de um Vampiro'
-            ];
-            const quoteElement = document.querySelector('.quote');
-            
-            let count = 0;
-            const target = 20;
-            const duration = 3500;
-            const interval = duration / target;
-            let quoteIndex = 0;
-            
-            const updateCounter = () => {
-                if (count < target) {
-                    count++;
-                    counter.textContent = count;
-                    progress.style.width = `${(count/target)*100}%`;
+        // Classe principal da aplicação
+        class BirthdayApp {
+            constructor() {
+                this.images = [];
+                this.currentImageIndex = 0;
+                this.isMusicPlaying = false;
+                this.processingComplete = false;
+                this.init();
+            }
+
+            async init() {
+                // Inicializar universo cósmico
+                this.createUniverse();
+                
+                // Iniciar processamento dos 20 anos
+                this.startAgeProcessing();
+                
+                // Carregar dados
+                await this.loadData();
+                
+                // Configurar eventos
+                this.setupEventListeners();
+                
+                // Criar conteúdo
+                this.createContent();
+            }
+
+            // Criar universo cósmico
+            createUniverse() {
+                // Criar estrelas
+                const starsContainer = document.getElementById('stars-container');
+                const starCount = 200;
+                
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
                     
-                    // Mudar a frase a cada 5 números
-                    if (count % 5 === 0) {
-                        quoteIndex = (quoteIndex + 1) % quotes.length;
-                        quoteElement.textContent = quotes[quoteIndex];
+                    // Tamanho aleatório
+                    const size = Math.random() * 3 + 1;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // Posição aleatória
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    
+                    // Brilho aleatório
+                    star.style.opacity = Math.random() * 0.7 + 0.3;
+                    
+                    // Animação personalizada
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    star.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                    
+                    starsContainer.appendChild(star);
+                }
+                
+                // Criar estrelas cadentes
+                const shootingStarsContainer = document.getElementById('shooting-stars');
+                const shootingStarCount = 5;
+                
+                for (let i = 0; i < shootingStarCount; i++) {
+                    const shootingStar = document.createElement('div');
+                    shootingStar.className = 'shooting-star';
+                    
+                    // Posição e atraso aleatórios
+                    shootingStar.style.left = `${Math.random() * 20}%`;
+                    shootingStar.style.top = `${Math.random() * 20}%`;
+                    shootingStar.style.animationDelay = `${Math.random() * 20}s`;
+                    
+                    shootingStarsContainer.appendChild(shootingStar);
+                }
+            }
+
+            // Processamento dos 20 anos
+            startAgeProcessing() {
+                const ageCounter = document.getElementById('age-counter');
+                const progressBar = document.getElementById('progress-bar');
+                const yearsText = document.getElementById('years-text');
+                const processingScreen = document.getElementById('processing-screen');
+                const mainContent = document.getElementById('main-content');
+                
+                let age = 0;
+                const targetAge = 20;
+                const duration = 5000; // 5 segundos
+                const interval = 50; // Atualizar a cada 50ms
+                const steps = duration / interval;
+                const increment = targetAge / steps;
+                
+                const yearMessages = [
+                    "Carregando o primeiro ano de vida...",
+                    "Relembrando os primeiros passos...",
+                    "Recordando as primeiras palavras...",
+                    "Revivendo a infância feliz...",
+                    "Celebrando os primeiros amigos...",
+                    "Relembrando os dias de escola...",
+                    "Recordando as descobertas...",
+                    "Revivendo os sonhos de criança...",
+                    "Celebrando a pré-adolescência...",
+                    "Relembrando as primeiras conquistas...",
+                    "Recordando os momentos especiais...",
+                    "Revivendo a entrada na adolescência...",
+                    "Celebrando os amigos verdadeiros...",
+                    "Relembrando os primeiros amores...",
+                    "Recordando as escolhas importantes...",
+                    "Revivendo os momentos decisivos...",
+                    "Celebrando a jornada até aqui...",
+                    "Relembrando as lições aprendidas...",
+                    "Recordando os desafios superados...",
+                    "Preparando a celebração dos 20 anos!"
+                ];
+                
+                const timer = setInterval(() => {
+                    age += increment;
+                    
+                    if (age >= targetAge) {
+                        age = targetAge;
+                        clearInterval(timer);
+                        
+                        // Completar o processamento
+                        setTimeout(() => {
+                            this.processingComplete = true;
+                            processingScreen.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                processingScreen.style.display = 'none';
+                                mainContent.style.opacity = '1';
+                                this.startCelebration();
+                            }, 1500);
+                        }, 500);
                     }
                     
-                    setTimeout(updateCounter, interval);
+                    // Atualizar contador
+                    ageCounter.textContent = Math.floor(age);
+                    
+                    // Atualizar barra de progresso
+                    progressBar.style.width = `${(age / targetAge) * 100}%`;
+                    
+                    // Atualizar texto
+                    const currentYear = Math.floor(age);
+                    if (currentYear > 0 && currentYear <= yearMessages.length) {
+                        yearsText.textContent = yearMessages[currentYear - 1];
+                    }
+                }, interval);
+            }
+
+            // Carregar dados do JSON
+            async loadData() {
+                try {
+                    // Simulação de carregamento - substitua pela sua URL real
+                    const response = await fetch('imagens.json');
+                    const data = await response.json();
+                    this.images = data.images;
+                } catch (error) {
+                    console.error('Erro ao carregar imagens:', error);
+                    // Fallback para imagens de exemplo
+                    this.images = this.getFallbackImages();
+                }
+            }
+
+            getFallbackImages() {
+                return Array.from({ length: 30 }, (_, i) => ({
+                    url: `https://picsum.photos/400/400?random=${i + 1}`,
+                    alt: `Momento especial ${i + 1}`,
+                    caption: `Memória preciosa #${i + 1}`
+                }));
+            }
+
+            // Configurar event listeners
+            setupEventListeners() {
+                // Música
+                const musicToggle = document.getElementById('music-toggle');
+                const music = document.getElementById('background-music');
+                
+                musicToggle.addEventListener('click', () => {
+                    this.toggleMusic(music);
+                });
+
+                // Modal da tributo
+                const readMoreBtn = document.getElementById('read-more');
+                const tributeModal = document.getElementById('tribute-modal');
+                const closeTribute = tributeModal.querySelector('.close-modal');
+
+                readMoreBtn.addEventListener('click', () => this.openModal(tributeModal));
+                closeTribute.addEventListener('click', () => this.closeModal(tributeModal));
+
+                // Lightbox da galeria
+                const lightbox = document.getElementById('gallery-lightbox');
+                const closeLightbox = lightbox.querySelector('.close-lightbox');
+                const prevBtn = lightbox.querySelector('.prev-btn');
+                const nextBtn = lightbox.querySelector('.next-btn');
+
+                closeLightbox.addEventListener('click', () => this.closeLightbox());
+                prevBtn.addEventListener('click', () => this.navigateGallery(-1));
+                nextBtn.addEventListener('click', () => this.navigateGallery(1));
+
+                // Fechar modais clicando fora
+                window.addEventListener('click', (e) => {
+                    if (e.target === tributeModal) this.closeModal(tributeModal);
+                    if (e.target === lightbox) this.closeLightbox();
+                });
+
+                // Teclado para navegação da galeria
+                document.addEventListener('keydown', (e) => {
+                    if (lightbox.style.display === 'block') {
+                        if (e.key === 'ArrowLeft') this.navigateGallery(-1);
+                        if (e.key === 'ArrowRight') this.navigateGallery(1);
+                        if (e.key === 'Escape') this.closeLightbox();
+                    }
+                });
+            }
+
+            // Criar conteúdo dinâmico
+            createContent() {
+                this.createMessageCards();
+                this.createGallery();
+                this.createGiftCards();
+                this.createHearts();
+            }
+
+            // Criar cards de mensagens
+            createMessageCards() {
+                const messages = [
+                    {
+                        title: "💖 Para a  Lúcia",
+                        preview: "Cada momento contigo é um tesouro que guardo no coração...",
+                        fullMessage: "Lúcia, querida...\n\nDesde o momento em que te conheci, soube que eras alguém especial. A tua gentileza, o teu sorriso contagiante, a tua maneira única de ver o mundo - tudo em ti é mágico.\n\nNestes 20 anos, cresceste numa pessoa extraordinária. A tua força de carácter, a tua compaixão pelos outros, a tua inteligência brilhante... tudo isso me enche de orgulho e admiração.\n\nQue este aniversário seja tão maravilhoso quanto és tu!"
+                    },
+                    {
+                        title: "🌟 20 Razões para Te Amar",
+                        preview: "Poderia listar mil razões, mas aqui estão 20 especiais...",
+                        fullMessage: "1. O teu sorriso que ilumina o meu dia\n2. A tua voz suave que acalma a minha alma\n3. A tua inteligência que me inspira\n4. A tua compaixão por todos os seres\n5. A tua força perante as adversidades\n6. O teu sentido de humor único\n7. A tua maneira de cuidar de quem amas\n8. A tua determinação em alcançar os sonhos\n9. A tua sensibilidade artística\n10. A tua lealdade incondicional\n11. A tua curiosidade pelo mundo\n12. A tua elegância natural\n13. A tua paciência infinita\n14. A tua sabedoria além dos anos\n15. A tua luz interior\n16. A tua capacidade de perdoar\n17. A tua generosidade\n18. A tua autenticidade\n19. A tua paixão pela vida\n20. O simples facto de seres tu!"
+                    },
+                    {
+                        title: "📜 Poema do Coração",
+                        preview: "Vinte primaveras se passaram...",
+                        fullMessage: "Vinte primaveras se passaram,\nDesde que chegaste a este mundo,\nTrazendo contigo a luz\nE um amor profundo.\n\nLúcia, nome que significa luz,\nIluminas cada recanto,\nCom a tua beleza interior\nE um coração tão santo.\n\nQue os próximos vinte anos\nSejam de pura felicidade,\nCheios de conquistas\nE muita prosperidade.\n\nÉs a estrela que guia\nOs meus dias e noites,\nA razão do meu sorriso\nE das minhas esperanças todas."
+                    },
+                    {
+                        title: "🎉 Celebração do Amor",
+                        preview: "Hoje não celebramos apenas 20 anos...",
+                        fullMessage: "Lúcia, minha querida,\n\nHoje não celebramos apenas 20 anos de vida. Celebramos 20 anos de ti - da pessoa incrível que és, do amor que espalhas, da luz que emanas.\n\nCada ruga no canto dos teus olhos quando sorrises conta uma história de felicidade. Cada experiência que viveste moldou a mulher forte e maravilhosa que te tornaste.\n\nEstou tão orgulhoso de ti e de tudo o que alcançaste. E sei que o melhor ainda está por vir, porque alguém com o teu coração e determinação só pode continuar a brilhar mais intensamente.\n\nFeliz aniversário, meu amor! Que este dia seja memorável e que o ano que se inicia seja repleto de realizações e alegrias."
+                    }
+                ];
+
+                const container = document.getElementById('clouds-container');
+                
+                messages.forEach((message, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'cloud-card';
+                    
+                    card.innerHTML = `
+                        <h3>${message.title}</h3>
+                        <p>${message.preview}</p>
+                        <div class="click-hint">✨ Clique para ler a mensagem completa</div>
+                    `;
+                    
+                    card.addEventListener('click', () => this.showMessageModal(message));
+                    container.appendChild(card);
+                });
+            }
+
+            // Criar galeria de imagens
+            createGallery() {
+                const container = document.getElementById('gallery-container');
+                
+                this.images.forEach((image, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    
+                    item.innerHTML = `
+                        <img src="${image.url}" alt="${image.alt}" loading="lazy">
+                        <div class="image-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    `;
+                    
+                    item.addEventListener('click', () => this.openLightbox(index));
+                    container.appendChild(item);
+                });
+            }
+
+            // Criar cards de presentes
+            createGiftCards() {
+                const gifts = [
+                    {
+                        icon: "🎁",
+                        title: "Presente do Coração",
+                        description: "Um presente especial que simboliza todo o amor que sinto por ti."
+                    },
+                    {
+                        icon: "💝",
+                        title: "Noite Inesquecível",
+                        description: "Uma celebração íntima só nossa, cheia de magia e romance."
+                    },
+                    {
+                        icon: "🌟",
+                        title: "Promessa Eterna",
+                        description: "O compromisso de estar ao teu lado em todos os momentos da vida."
+                    },
+                    {
+                        icon: "📸",
+                        title: "Memórias Preservadas",
+                        description: "Todos os nossos momentos especiais guardados para a eternidade."
+                    }
+                ];
+
+                const container = document.getElementById('gifts-container');
+                
+                gifts.forEach((gift, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'gift-card';
+                    
+                    card.innerHTML = `
+                        <div class="gift-icon">${gift.icon}</div>
+                        <h3>${gift.title}</h3>
+                        <p>${gift.description}</p>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+
+            // Criar corações caindo
+            createHearts() {
+                const heartsContainer = document.getElementById('hearts-container');
+                const heartCount = 15;
+                
+                for (let i = 0; i < heartCount; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤';
+                    
+                    // Posição e atraso aleatórios
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.animationDelay = `${Math.random() * 10}s`;
+                    heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                    
+                    heartsContainer.appendChild(heart);
+                }
+            }
+
+            // Controle de música
+            toggleMusic(music) {
+                const btn = document.getElementById('music-toggle');
+                
+                if (this.isMusicPlaying) {
+                    music.pause();
+                    btn.innerHTML = '<i class="fas fa-music"></i><span>Música</span>';
                 } else {
-                    // Esconder preloader e mostrar conteúdo principal
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        mainContent.style.opacity = '1';
-                        initAnimations();
-                        createConfetti();
-                        initDayNightTransition();
-                    }, 800);
+                    music.play().catch(e => console.log('Autoplay prevented:', e));
+                    btn.innerHTML = '<i class="fas fa-pause"></i><span>Pausar</span>';
                 }
-            };
-            
-            setTimeout(updateCounter, 500);
-            
-            // Inicializar animações
-            function initAnimations() {
-                // Animação de entrada do cabeçalho
-                gsap.to('h1', { duration: 1.5, opacity: 1, y: 0, ease: "elastic.out(1, 0.3)" });
-                gsap.to('h2', { duration: 1.5, opacity: 1, y: 0, delay: 0.3, ease: "elastic.out(1, 0.3)" });
-                gsap.to('.age-badge', { duration: 1.5, opacity: 1, y: 0, delay: 0.6, ease: "elastic.out(1, 0.3)" });
                 
-                // Inicializar ScrollTrigger
-                gsap.registerPlugin(ScrollTrigger);
+                this.isMusicPlaying = !this.isMusicPlaying;
+            }
+
+            // Mostrar modal de mensagem
+            showMessageModal(message) {
+                const modal = document.getElementById('message-modal');
+                const content = document.getElementById('modal-message');
                 
-                // Animações de timeline
-                gsap.utils.toArray('.timeline-item').forEach(item => {
-                    gsap.to(item, {
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        },
+                content.innerHTML = `
+                    <h3>${message.title}</h3>
+                    <div class="message-content">${message.fullMessage.replace(/\n/g, '<br>')}</div>
+                `;
+                
+                this.openModal(modal);
+                this.createHeartExplosion();
+            }
+
+            // Criar explosão de corações
+            createHeartExplosion() {
+                const explosionContainer = document.createElement('div');
+                explosionContainer.style.position = 'fixed';
+                explosionContainer.style.top = '50%';
+                explosionContainer.style.left = '50%';
+                explosionContainer.style.transform = 'translate(-50%, -50%)';
+                explosionContainer.style.pointerEvents = 'none';
+                explosionContainer.style.zIndex = '1000';
+                
+                document.body.appendChild(explosionContainer);
+                
+                const heartCount = 20;
+                
+                for (let i = 0; i < heartCount; i++) {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤';
+                    heart.style.position = 'absolute';
+                    heart.style.fontSize = '30px';
+                    heart.style.color = '#ff6b6b';
+                    heart.style.opacity = '0';
+                    
+                    explosionContainer.appendChild(heart);
+                    
+                    // Animação GSAP
+                    gsap.to(heart, {
+                        x: (Math.random() - 0.5) * 500,
+                        y: (Math.random() - 0.5) * 500,
                         opacity: 1,
-                        y: 0,
-                        duration: 1.2,
-                        ease: "power2.out"
-                    });
-                });
-                
-                // Animações de mensagens
-                gsap.utils.toArray('.message').forEach(message => {
-                    gsap.to(message, {
-                        scrollTrigger: {
-                            trigger: message,
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        },
-                        opacity: 1,
-                        y: 0,
+                        scale: 1.5,
                         duration: 1,
-                        ease: "power2.out"
-                    });
-                });
-                
-                // Carregar imagens com transição
-                const images = document.querySelectorAll('img');
-                images.forEach(img => {
-                    if (img.complete) {
-                        img.classList.add('loaded');
-                    } else {
-                        img.addEventListener('load', function() {
-                            this.classList.add('loaded');
-                        });
-                    }
-                });
-                
-                // Botão voltar ao topo
-                const backToTop = document.querySelector('.back-to-top');
-                
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 500) {
-                        backToTop.classList.add('visible');
-                    } else {
-                        backToTop.classList.remove('visible');
-                    }
-                });
-                
-                backToTop.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-                
-                // Galeria 3D - Virar cartões ao clicar
-                const galleryItems = document.querySelectorAll('.gallery-item');
-                galleryItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        this.classList.toggle('flipped');
-                    });
-                });
-            }
-            
-            // Inicializar transição dia/noite
-            function initDayNightTransition() {
-                const body = document.body;
-                const threshold = 0.6; // 60% da página
-                
-                // Observar a posição de rolagem
-                let lastScrollY = window.scrollY;
-                let ticking = false;
-                
-                function updateNightMode() {
-                    const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-                    
-                    if (scrollPercent > threshold) {
-                        body.classList.add('night-mode');
-                    } else {
-                        body.classList.remove('night-mode');
-                    }
-                    
-                    ticking = false;
-                }
-                
-                function onScroll() {
-                    lastScrollY = window.scrollY;
-                    
-                    if (!ticking) {
-                        requestAnimationFrame(updateNightMode);
-                        ticking = true;
-                    }
-                }
-                
-                window.addEventListener('scroll', onScroll);
-                
-                // Verificar estado inicial
-                updateNightMode();
-            }
-            
-            // Criar confetes
-            function createConfetti() {
-                const colors = ['#e83e8c', '#6f42c1', '#20c997', '#ffd700', '#fd7e14'];
-                
-                for (let i = 0; i < 100; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (5 + Math.random() * 10) + 'px';
-                    confetti.style.height = (5 + Math.random() * 10) + 'px';
-                    confetti.style.animationDuration = (2 + Math.random() * 5) + 's';
-                    confetti.style.animationDelay = Math.random() * 5 + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        if (confetti.parentNode) {
-                            confetti.parentNode.removeChild(confetti);
+                        ease: "power2.out",
+                        onComplete: () => {
+                            gsap.to(heart, {
+                                opacity: 0,
+                                scale: 0.5,
+                                duration: 0.5,
+                                delay: 0.5,
+                                onComplete: () => {
+                                    heart.remove();
+                                    if (explosionContainer.children.length === 0) {
+                                        explosionContainer.remove();
+                                    }
+                                }
+                            });
                         }
-                    }, 7000);
+                    });
+                }
+            }
+
+            // Abrir lightbox da galeria
+            openLightbox(index) {
+                this.currentImageIndex = index;
+                this.updateLightbox();
+                
+                const lightbox = document.getElementById('gallery-lightbox');
+                lightbox.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Atualizar lightbox
+            updateLightbox() {
+                const image = document.getElementById('lightbox-image');
+                const caption = document.getElementById('image-caption');
+                const thumbnails = document.getElementById('lightbox-thumbnails');
+                
+                const currentImage = this.images[this.currentImageIndex];
+                
+                image.src = currentImage.url;
+                image.alt = currentImage.alt;
+                caption.textContent = currentImage.caption;
+                
+                // Miniaturas
+                thumbnails.innerHTML = '';
+                this.images.forEach((img, index) => {
+                    const thumb = document.createElement('img');
+                    thumb.className = `thumbnail ${index === this.currentImageIndex ? 'active' : ''}`;
+                    thumb.src = img.url;
+                    thumb.alt = img.alt;
+                    thumb.addEventListener('click', () => {
+                        this.currentImageIndex = index;
+                        this.updateLightbox();
+                    });
+                    thumbnails.appendChild(thumb);
+                });
+            }
+
+            // Navegar na galeria
+            navigateGallery(direction) {
+                this.currentImageIndex += direction;
+                
+                if (this.currentImageIndex < 0) {
+                    this.currentImageIndex = this.images.length - 1;
+                } else if (this.currentImageIndex >= this.images.length) {
+                    this.currentImageIndex = 0;
                 }
                 
-                setInterval(createConfetti, 4000);
+                this.updateLightbox();
             }
+
+            // Fechar lightbox
+            closeLightbox() {
+                const lightbox = document.getElementById('gallery-lightbox');
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Gerenciar modais
+            openModal(modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeModal(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Iniciar celebração
+            startCelebration() {
+                // Animação do título
+                const titleWords = document.querySelectorAll('.title-word');
+                
+                gsap.to(titleWords, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "back.out"
+                });
+                
+                // Criar confete inicial
+                this.createConfetti();
+                
+                // Inicializar AOS (Animate On Scroll)
+                if (typeof AOS !== 'undefined') {
+                    AOS.init({
+                        duration: 1000,
+                        once: true,
+                        offset: 100
+                    });
+                }
+            }
+
+            // Criar efeito de confete
+            createConfetti() {
+                const confettiContainer = document.createElement('div');
+                confettiContainer.style.position = 'fixed';
+                confettiContainer.style.top = '0';
+                confettiContainer.style.left = '0';
+                confettiContainer.style.width = '100%';
+                confettiContainer.style.height = '100%';
+                confettiContainer.style.pointerEvents = 'none';
+                confettiContainer.style.zIndex = '1000';
+                
+                document.body.appendChild(confettiContainer);
+                
+                const confettiCount = 150;
+                const colors = ['#ff6b6b', '#ffd93d', '#6bcf7f', '#4d96ff', '#c56cf0'];
+                
+                for (let i = 0; i < confettiCount; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.top = '-20px';
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    
+                    confettiContainer.appendChild(confetti);
+                    
+                    // Animação GSAP
+                    gsap.to(confetti, {
+                        y: window.innerHeight + 20,
+                        rotation: Math.random() * 360,
+                        x: (Math.random() - 0.5) * 200,
+                        duration: Math.random() * 3 + 2,
+                        ease: "power1.out",
+                        onComplete: () => {
+                            confetti.remove();
+                            if (confettiContainer.children.length === 0) {
+                                confettiContainer.remove();
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        // Inicializar a aplicação quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            window.birthdayApp = new BirthdayApp();
         });
     </script>
 </body>
